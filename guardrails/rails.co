@@ -61,16 +61,11 @@ define flow check pii request
 
 
 # ── Output Rails ──────────────────────────────────────────────────────────────
-
-define bot provide sensitive output
-  "CCCD của nhân viên là"
-  "số điện thoại cá nhân của"
-  "mật khẩu hệ thống là"
-  "thông tin bí mật"
-
-define flow check sensitive output
-  bot provide sensitive output
-  bot say "Tôi không thể cung cấp thông tin này. Vui lòng liên hệ phòng Nhân sự trực tiếp."
+#
+# Output rail nằm ở `self check output` trong config.yml, không phải ở đây.
+# `define bot provide sensitive output` + `define flow check sensitive output` cũ
+# dựa vào bot-intent matching: NeMo phân loại câu trả lời rồi phát lại canonical
+# form của mẫu gần nhất, nên verdict không tương quan với nội dung thật.
 
 
 # ── HR Policy Flows (allowed topics) ──────────────────────────────────────────

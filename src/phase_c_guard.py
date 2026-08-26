@@ -173,14 +173,28 @@ async def check_output_rail(question: str, answer: str, rails=None) -> dict:
             rails = None
     if rails is not None:
         try:
-            raw = await rails.generate_async(messages=[
-                {"role": "user", "content": question}, {"role": "assistant", "content": answer}])
-            response = raw.get("content", "") if isinstance(raw, dict) else str(raw)
-            refused = any(keyword in response.casefold() for keyword in
-                          ["xin lỗi", "không thể cung cấp", "i cannot"])
-            return {"safe": not refused, "flagged_reason": "nemo_output_rail" if refused else None,
-                    "final_answer": response if refused else answer}
+            from nemoguardrails.rails.llm.options import GenerationOptions
+
+            # rails=["output"] chạy ĐÚNG output rail (self check output) trên câu trả lời
+            # có sẵn. Bỏ options đi thì generate_async sinh một lượt hội thoại mới và
+            # verdict trở thành ngẫu nhiên.
+            raw = await rails.generate_async(
+                messages=[{"role": "user", "content": question},
+                          {"role": "assistant", "content": answer}],
+                options=GenerationOptions(rails=["output"]))
+            response = getattr(raw, "response", raw)
+            if isinstance(response, list):
+                response = response[0].get("content", "") if response else ""
+            elif isinstance(response, dict):
+                response = response.get("content", "")
+            response = str(response).strip()
+            # Output rail trả lại nguyên văn khi an toàn, thay bằng câu từ chối khi chặn.
+            # So sánh chuỗi bền hơn match keyword — câu từ chối đổi theo config/locale.
+            blocked = response != answer.strip()
+            return {"safe": not blocked, "flagged_reason": "nemo_output_rail" if blocked else None,
+                    "final_answer": response if blocked else answer}
         except Exception:
+            # Fail-closed: verifier chết thì coi như không xác minh được (blueprint: Block + log).
             return {"safe": False, "flagged_reason": "nemo_unavailable",
                     "final_answer": "Không thể xác minh độ an toàn của câu trả lời lúc này."}
     return {"safe": True, "flagged_reason": None, "final_answer": answer}

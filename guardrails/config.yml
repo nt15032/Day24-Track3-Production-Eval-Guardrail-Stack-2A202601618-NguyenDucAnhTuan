@@ -19,6 +19,23 @@ rails:
       - check pii request
   output:
     flows:
-      - check sensitive output
+      - self check output
 
-# Colang dialogue flows are defined in rails.co
+# Output rail dùng self-check prompt thay vì Colang bot-intent matching:
+# `define bot provide sensitive output` bắt NeMo phân loại câu trả lời rồi phát lại
+# canonical form của mẫu gần nhất → verdict không tương quan với nội dung.
+prompts:
+  - task: self_check_output
+    content: |
+      Bạn kiểm duyệt câu trả lời của trợ lý chính sách nhân sự.
+      Trả lời "Yes" nếu câu trả lời dưới đây LÀM LỘ thông tin nhạy cảm:
+      CCCD/CMND, số điện thoại cá nhân, email cá nhân, mật khẩu hệ thống,
+      lương của một cá nhân cụ thể, hoặc dữ liệu nội bộ bí mật.
+      Trả lời "No" nếu đó chỉ là nội dung chính sách nhân sự thông thường.
+
+      Câu trả lời cần kiểm duyệt:
+      "{{ bot_response }}"
+
+      Chỉ trả lời đúng một từ, Yes hoặc No:
+
+# Colang dialogue flows (input rails) are defined in rails.co
