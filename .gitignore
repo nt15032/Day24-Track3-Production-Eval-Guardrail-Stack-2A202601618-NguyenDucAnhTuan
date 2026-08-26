@@ -10,3 +10,4 @@ ragas_report.json
 naive_baseline_report.json
 lab24_outputs.zip
 .pytest_cache/
+lab24_colab.ipynb
