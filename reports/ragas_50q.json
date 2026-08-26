@@ -1,53 +1,53 @@
 {
   "total_questions": 50,
-  "evaluation_mode": "offline_proxy",
+  "evaluation_mode": "ragas_deepseek",
   "per_distribution": {
     "factual": {
       "count": 20,
-      "faithfulness": 1.0,
-      "answer_relevancy": 0.792935,
-      "context_precision": 0.9500049999999998,
-      "context_recall": 0.8664,
-      "avg_score": 0.9023349999999999
+      "faithfulness": 0.9628950000000002,
+      "answer_relevancy": 0.8879149999999999,
+      "context_precision": 1.0,
+      "context_recall": 0.9543900000000001,
+      "avg_score": 0.9513000000000001
     },
     "multi_hop": {
       "count": 20,
-      "faithfulness": 1.0,
-      "answer_relevancy": 0.579075,
-      "context_precision": 0.93334,
-      "context_recall": 0.6584350000000001,
-      "avg_score": 0.7927124999999998
+      "faithfulness": 0.7325849999999999,
+      "answer_relevancy": 0.6615399999999999,
+      "context_precision": 0.983335,
+      "context_recall": 0.7544549999999999,
+      "avg_score": 0.7829787500000001
     },
     "adversarial": {
       "count": 10,
-      "faithfulness": 1.0,
-      "answer_relevancy": 0.82255,
-      "context_precision": 0.7666700000000001,
-      "context_recall": 0.53927,
-      "avg_score": 0.7821225
+      "faithfulness": 0.8179300000000002,
+      "answer_relevancy": 0.51478,
+      "context_precision": 0.93334,
+      "context_recall": 0.6429100000000001,
+      "avg_score": 0.7272399999999999
     }
   },
   "failure_clusters": {
     "matrix": {
       "faithfulness": {
-        "factual": 5,
-        "multi_hop": 0,
+        "factual": 10,
+        "multi_hop": 7,
         "adversarial": 0
       },
       "context_recall": {
-        "factual": 5,
-        "multi_hop": 6,
-        "adversarial": 8
+        "factual": 2,
+        "multi_hop": 5,
+        "adversarial": 4
       },
       "context_precision": {
-        "factual": 2,
+        "factual": 0,
         "multi_hop": 1,
-        "adversarial": 1
+        "adversarial": 0
       },
       "answer_relevancy": {
         "factual": 8,
-        "multi_hop": 13,
-        "adversarial": 1
+        "multi_hop": 7,
+        "adversarial": 6
       }
     },
     "dominant_failure_distribution": "adversarial",
@@ -57,100 +57,100 @@
   "bottom_10": [
     {
       "rank": 1,
-      "question_id": 40,
-      "distribution": "multi_hop",
-      "question": "Nhân viên thử việc tháng thứ 3 phát hiện vi phạm bảo mật. Họ nên và không nên làm gì theo chính sách?",
-      "avg_score": 0.5557,
-      "worst_metric": "context_recall",
-      "diagnosis": "Missing relevant chunks",
-      "suggested_fix": "Improve chunking or add BM25"
+      "question_id": 48,
+      "distribution": "adversarial",
+      "question": "Nhân viên thử việc có được hưởng bảo hiểm sức khỏe PVI không?",
+      "avg_score": 0.422,
+      "worst_metric": "answer_relevancy",
+      "diagnosis": "Answer doesn't match question",
+      "suggested_fix": "Improve prompt template"
     },
     {
       "rank": 2,
-      "question_id": 37,
+      "question_id": 33,
       "distribution": "multi_hop",
-      "question": "Nhân viên tự ý xóa malware khỏi máy và chia sẻ thông tin sự cố này trên Slack nội bộ. Vi phạm những chính sách nào cụ thể?",
-      "avg_score": 0.5659,
+      "question": "Nhân viên Manager có thâm niên 12 năm: tổng phụ cấp hàng tháng và số ngày phép năm theo v2024 là bao nhiêu?",
+      "avg_score": 0.4524,
       "worst_metric": "answer_relevancy",
       "diagnosis": "Answer doesn't match question",
       "suggested_fix": "Improve prompt template"
     },
     {
       "rank": 3,
-      "question_id": 50,
-      "distribution": "adversarial",
-      "question": "Nhân viên Manager có thể dùng VPN cá nhân (như NordVPN) khi WFH để tăng bảo mật thêm không?",
-      "avg_score": 0.6243,
-      "worst_metric": "context_recall",
-      "diagnosis": "Missing relevant chunks",
-      "suggested_fix": "Improve chunking or add BM25"
+      "question_id": 21,
+      "distribution": "multi_hop",
+      "question": "Một nhân viên Senior có 9 năm thâm niên được nghỉ bao nhiêu ngày phép năm và lương trong khoảng nào?",
+      "avg_score": 0.4649,
+      "worst_metric": "answer_relevancy",
+      "diagnosis": "Answer doesn't match question",
+      "suggested_fix": "Improve prompt template"
     },
     {
       "rank": 4,
-      "question_id": 41,
+      "question_id": 50,
       "distribution": "adversarial",
-      "question": "Nhân viên được nghỉ bao nhiêu ngày phép năm?",
-      "avg_score": 0.6637,
-      "worst_metric": "context_recall",
-      "diagnosis": "Missing relevant chunks",
-      "suggested_fix": "Improve chunking or add BM25"
+      "question": "Nhân viên Manager có thể dùng VPN cá nhân (như NordVPN) khi WFH để tăng bảo mật thêm không?",
+      "avg_score": 0.4921,
+      "worst_metric": "answer_relevancy",
+      "diagnosis": "Answer doesn't match question",
+      "suggested_fix": "Improve prompt template"
     },
     {
       "rank": 5,
-      "question_id": 48,
-      "distribution": "adversarial",
-      "question": "Nhân viên thử việc có được hưởng bảo hiểm sức khỏe PVI không?",
-      "avg_score": 0.6987,
-      "worst_metric": "context_precision",
-      "diagnosis": "Too many irrelevant chunks",
-      "suggested_fix": "Add reranking or metadata filter"
+      "question_id": 32,
+      "distribution": "multi_hop",
+      "question": "Nhân viên mới đang trong tháng thứ 3 thử việc có BẮT BUỘC tham dự buổi đào tạo nội bộ của phòng ban không? Tại sao?",
+      "avg_score": 0.5039,
+      "worst_metric": "faithfulness",
+      "diagnosis": "LLM hallucinating",
+      "suggested_fix": "Tighten system prompt, lower temperature"
     },
     {
       "rank": 6,
-      "question_id": 39,
-      "distribution": "multi_hop",
-      "question": "So sánh yêu cầu mật khẩu giữa policy v1.0 và v2.0 về độ dài tối thiểu, thời hạn đổi và MFA.",
-      "avg_score": 0.7182,
+      "question_id": 42,
+      "distribution": "adversarial",
+      "question": "Thâm niên bao nhiêu năm thì được cộng thêm ngày phép?",
+      "avg_score": 0.5531,
       "worst_metric": "answer_relevancy",
       "diagnosis": "Answer doesn't match question",
       "suggested_fix": "Improve prompt template"
     },
     {
       "rank": 7,
-      "question_id": 30,
-      "distribution": "multi_hop",
-      "question": "So sánh quyền lợi bảo hiểm giữa nhân viên thử việc và nhân viên chính thức.",
-      "avg_score": 0.7202,
+      "question_id": 44,
+      "distribution": "adversarial",
+      "question": "Bao lâu phải đổi mật khẩu một lần?",
+      "avg_score": 0.7059,
       "worst_metric": "answer_relevancy",
       "diagnosis": "Answer doesn't match question",
       "suggested_fix": "Improve prompt template"
     },
     {
       "rank": 8,
-      "question_id": 20,
-      "distribution": "factual",
-      "question": "Phụ cấp đi lại tối đa mỗi tháng là bao nhiêu và điều kiện để được hưởng là gì?",
-      "avg_score": 0.732,
+      "question_id": 45,
+      "distribution": "adversarial",
+      "question": "Có cần kích hoạt xác thực đa yếu tố (MFA) không?",
+      "avg_score": 0.7083,
       "worst_metric": "answer_relevancy",
       "diagnosis": "Answer doesn't match question",
       "suggested_fix": "Improve prompt template"
     },
     {
       "rank": 9,
-      "question_id": 33,
+      "question_id": 40,
       "distribution": "multi_hop",
-      "question": "Nhân viên Manager có thâm niên 12 năm: tổng phụ cấp hàng tháng và số ngày phép năm theo v2024 là bao nhiêu?",
-      "avg_score": 0.75,
-      "worst_metric": "context_recall",
-      "diagnosis": "Missing relevant chunks",
-      "suggested_fix": "Improve chunking or add BM25"
+      "question": "Nhân viên thử việc tháng thứ 3 phát hiện vi phạm bảo mật. Họ nên và không nên làm gì theo chính sách?",
+      "avg_score": 0.753,
+      "worst_metric": "context_precision",
+      "diagnosis": "Too many irrelevant chunks",
+      "suggested_fix": "Add reranking or metadata filter"
     },
     {
       "rank": 10,
       "question_id": 34,
       "distribution": "multi_hop",
       "question": "Nhân viên tạm ứng 4 triệu và một nhân viên khác tạm ứng 7 triệu: quy trình phê duyệt khác nhau thế nào?",
-      "avg_score": 0.75,
+      "avg_score": 0.7711,
       "worst_metric": "answer_relevancy",
       "diagnosis": "Answer doesn't match question",
       "suggested_fix": "Improve prompt template"

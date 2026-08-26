@@ -1,6 +1,6 @@
 {
-  "judge_model": "offline_deterministic_fallback",
-  "cohen_kappa": 0.4,
+  "judge_model": "gpt-4o-mini",
+  "cohen_kappa": 0.4444,
   "labels": [
     {
       "question_id": 1,
@@ -9,6 +9,8 @@
       "human_label": 1,
       "human_note": "Chính xác và đầy đủ.",
       "judge_label": 1,
+      "judge_winner": "tie",
+      "position_consistent": false,
       "reference_similarity": 0.7222,
       "agree": true
     },
@@ -18,9 +20,11 @@
       "model_answer": "Cần Giám đốc phòng ban phê duyệt.",
       "human_label": 0,
       "human_note": "Sai — 55 triệu vượt ngưỡng 50 triệu nên phải CEO phê duyệt, không phải Director.",
-      "judge_label": 1,
+      "judge_label": 0,
+      "judge_winner": "B",
+      "position_consistent": true,
       "reference_similarity": 0.3846,
-      "agree": false
+      "agree": true
     },
     {
       "question_id": 12,
@@ -29,6 +33,8 @@
       "human_label": 1,
       "human_note": "Đúng và súc tích.",
       "judge_label": 0,
+      "judge_winner": "B",
+      "position_consistent": true,
       "reference_similarity": 0.3448,
       "agree": false
     },
@@ -39,6 +45,8 @@
       "human_label": 1,
       "human_note": "Tính đúng, bao gồm cả phép và lương.",
       "judge_label": 1,
+      "judge_winner": "tie",
+      "position_consistent": false,
       "reference_similarity": 0.6087,
       "agree": true
     },
@@ -49,6 +57,8 @@
       "human_label": 1,
       "human_note": "Đúng — 100% hoàn trả vì nghỉ trước 12 tháng.",
       "judge_label": 0,
+      "judge_winner": "B",
+      "position_consistent": true,
       "reference_similarity": 0.2258,
       "agree": false
     },
@@ -59,6 +69,8 @@
       "human_label": 0,
       "human_note": "Thiếu — 8 triệu cần cả Kế toán trưởng. Phạt phải tính pro-rata cho 15 ngày quá hạn = 80.000 VNĐ.",
       "judge_label": 0,
+      "judge_winner": "B",
+      "position_consistent": true,
       "reference_similarity": 0.2812,
       "agree": true
     },
@@ -68,9 +80,11 @@
       "model_answer": "Phép: 19 ngày. Phụ cấp: 1.500.000 VNĐ/tháng.",
       "human_label": 1,
       "human_note": "Tính đúng cả hai.",
-      "judge_label": 1,
+      "judge_label": 0,
+      "judge_winner": "B",
+      "position_consistent": true,
       "reference_similarity": 0.4167,
-      "agree": true
+      "agree": false
     },
     {
       "question_id": 41,
@@ -79,6 +93,8 @@
       "human_label": 0,
       "human_note": "Sai — trả lời theo v2023 đã hết hiệu lực. v2024 hiện hành là 15 ngày.",
       "judge_label": 0,
+      "judge_winner": "B",
+      "position_consistent": true,
       "reference_similarity": 0.0811,
       "agree": true
     },
@@ -89,6 +105,8 @@
       "human_label": 1,
       "human_note": "Đúng hoàn toàn, bao gồm hành động thay thế.",
       "judge_label": 1,
+      "judge_winner": "tie",
+      "position_consistent": false,
       "reference_similarity": 0.5172,
       "agree": true
     },
@@ -99,19 +117,21 @@
       "human_label": 0,
       "human_note": "Sai — VPN cá nhân bị cấm theo chính sách VPN v1.3. Phải dùng VPN WireGuard của công ty.",
       "judge_label": 0,
+      "judge_winner": "B",
+      "position_consistent": true,
       "reference_similarity": 0.0286,
       "agree": true
     }
   ],
   "bias": {
-    "total_judged": 5,
-    "position_bias_rate": 0.0,
-    "position_bias_count": 0,
-    "verbosity_bias": 0.8,
+    "total_judged": 10,
+    "position_bias_rate": 0.3,
+    "position_bias_count": 3,
+    "verbosity_bias": 1.0,
     "verbosity_details": {
       "a_wins_a_longer": 0,
-      "b_wins_b_longer": 4,
-      "total_decisive": 5
+      "b_wins_b_longer": 7,
+      "total_decisive": 7
     },
     "interpretation": "Position bias thấp; kết quả judge tương đối ổn định qua phép đổi vị trí. Verbosity bias đáng lưu ý."
   },
@@ -121,18 +141,18 @@
       "answer_a": "Nhân viên được nghỉ 3 ngày làm việc có lương khi kết hôn.",
       "answer_b": "Nhân viên được nghỉ 3 ngày làm việc có lương khi kết hôn, không trừ vào phép năm.",
       "winner_pass1": "B",
-      "winner_pass2": "B",
-      "final_winner": "B",
-      "reasoning_pass1": "Fallback local: so sánh mức độ bao phủ câu hỏi, tính cụ thể và độ súc tích; A=0.690, B=0.790.",
-      "reasoning_pass2": "Fallback local: so sánh mức độ bao phủ câu hỏi, tính cụ thể và độ súc tích; A=0.790, B=0.690.",
-      "position_consistent": true,
+      "winner_pass2": "tie",
+      "final_winner": "tie",
+      "reasoning_pass1": "Answer B provides additional information that the leave does not deduct from annual leave, making it more complete than Answer A. Both answers are accurate, but B is more informative without being excessively long.",
+      "reasoning_pass2": "Cả hai câu trả lời đều cung cấp thông tin chính xác và đầy đủ về số ngày nghỉ khi kết hôn. Câu A có thêm thông tin về việc không trừ vào phép năm, nhưng điều này không làm cho câu trả lời trở nên tốt hơn một cách đáng kể. Cả hai đều súc tích và không có câu nào dài hơn câu kia.",
+      "position_consistent": false,
       "scores_pass1": {
-        "A": 0.69,
-        "B": 0.79
+        "A": 0.8,
+        "B": 1.0
       },
       "scores_pass2": {
-        "A": 0.69,
-        "B": 0.79
+        "A": 1.0,
+        "B": 1.0
       }
     },
     {
@@ -142,16 +162,16 @@
       "winner_pass1": "B",
       "winner_pass2": "B",
       "final_winner": "B",
-      "reasoning_pass1": "Fallback local: so sánh mức độ bao phủ câu hỏi, tính cụ thể và độ súc tích; A=0.287, B=0.588.",
-      "reasoning_pass2": "Fallback local: so sánh mức độ bao phủ câu hỏi, tính cụ thể và độ súc tích; A=0.588, B=0.287.",
+      "reasoning_pass1": "Answer B provides a specific monetary threshold for approval, which is relevant to the question, while Answer A lacks this detail and is less precise. Therefore, Answer B is more accurate and complete.",
+      "reasoning_pass2": "Câu trả lời A cung cấp thông tin chính xác về mức phê duyệt cần thiết cho đơn hàng trên 50 triệu VNĐ, trong khi câu trả lời B không nêu rõ mức phê duyệt cần thiết và có thể gây nhầm lẫn.",
       "position_consistent": true,
       "scores_pass1": {
-        "A": 0.2875,
-        "B": 0.5875
+        "A": 0.4,
+        "B": 0.8
       },
       "scores_pass2": {
-        "A": 0.2875,
-        "B": 0.5875
+        "A": 0.0,
+        "B": 1.0
       }
     },
     {
@@ -161,35 +181,35 @@
       "winner_pass1": "B",
       "winner_pass2": "B",
       "final_winner": "B",
-      "reasoning_pass1": "Fallback local: so sánh mức độ bao phủ câu hỏi, tính cụ thể và độ súc tích; A=0.464, B=0.878.",
-      "reasoning_pass2": "Fallback local: so sánh mức độ bao phủ câu hỏi, tính cụ thể và độ súc tích; A=0.878, B=0.464.",
+      "reasoning_pass1": "Câu trả lời B cung cấp thông tin đầy đủ hơn bằng cách nêu rõ điều kiện về thời gian làm việc và thông tin về nhân viên dưới 6 tháng, trong khi câu A chỉ đưa ra thông tin tối thiểu mà không có bối cảnh.",
+      "reasoning_pass2": "Câu trả lời A cung cấp thông tin đầy đủ về điều kiện thưởng Tết cho nhân viên chính thức, bao gồm cả thông tin về nhân viên dưới 6 tháng. Câu B chỉ nêu ra mức thưởng mà không đề cập đến điều kiện, do đó không đầy đủ.",
       "position_consistent": true,
       "scores_pass1": {
-        "A": 0.4639,
-        "B": 0.8778
+        "A": 0.5,
+        "B": 1.0
       },
       "scores_pass2": {
-        "A": 0.4639,
-        "B": 0.8778
+        "A": 0.5,
+        "B": 1.0
       }
     },
     {
       "question": "Một nhân viên Senior có 9 năm thâm niên được nghỉ bao nhiêu ngày phép năm và lương trong khoảng nào?",
       "answer_a": "Được nghỉ 18 ngày phép (15 cơ bản + 3 thâm niên). Lương Senior từ 20 đến 35 triệu.",
       "answer_b": "Theo chính sách v2024: 15 ngày cơ bản + 3 ngày thâm niên (9÷3=3) = 18 ngày phép. Lương Senior (P3-P4): 20-35 triệu VNĐ/tháng.",
-      "winner_pass1": "A",
+      "winner_pass1": "B",
       "winner_pass2": "A",
-      "final_winner": "A",
-      "reasoning_pass1": "Fallback local: so sánh mức độ bao phủ câu hỏi, tính cụ thể và độ súc tích; A=0.670, B=0.615.",
-      "reasoning_pass2": "Fallback local: so sánh mức độ bao phủ câu hỏi, tính cụ thể và độ súc tích; A=0.615, B=0.670.",
-      "position_consistent": true,
+      "final_winner": "tie",
+      "reasoning_pass1": "Answer B provides a clear reference to the specific policy version (v2024) and explains the calculation for the additional leave days based on seniority, which adds to its accuracy and completeness. Answer A, while correct, lacks the context of the policy version and the calculation detail.",
+      "reasoning_pass2": "Câu trả lời B ngắn gọn và đầy đủ thông tin cần thiết mà không có phần giải thích thừa. Câu A mặc dù chính xác nhưng có phần dài dòng và không cần thiết.",
+      "position_consistent": false,
       "scores_pass1": {
-        "A": 0.67,
-        "B": 0.615
+        "A": 0.7,
+        "B": 0.9
       },
       "scores_pass2": {
-        "A": 0.67,
-        "B": 0.615
+        "A": 0.9,
+        "B": 0.7
       }
     },
     {
@@ -199,16 +219,111 @@
       "winner_pass1": "B",
       "winner_pass2": "B",
       "final_winner": "B",
-      "reasoning_pass1": "Fallback local: so sánh mức độ bao phủ câu hỏi, tính cụ thể và độ súc tích; A=0.466, B=0.826.",
-      "reasoning_pass2": "Fallback local: so sánh mức độ bao phủ câu hỏi, tính cụ thể và độ súc tích; A=0.826, B=0.466.",
+      "reasoning_pass1": "Câu trả lời B cung cấp thông tin đầy đủ về yêu cầu cam kết làm việc sau khi hoàn thành khóa học, giải thích rõ ràng lý do tại sao nhân viên phải hoàn trả 100% chi phí. Câu A chỉ nêu ra số tiền hoàn trả mà không giải thích lý do, do đó thiếu tính đầy đủ và rõ ràng.",
+      "reasoning_pass2": "Câu trả lời A cung cấp thông tin chi tiết về cam kết làm việc sau khi hoàn thành khóa học và lý do phải hoàn trả 100% chi phí. Câu trả lời B tuy ngắn gọn nhưng thiếu thông tin về cam kết và lý do hoàn trả, làm cho nó kém đầy đủ hơn.",
       "position_consistent": true,
       "scores_pass1": {
-        "A": 0.4658,
-        "B": 0.8263
+        "A": 0.5,
+        "B": 1.0
       },
       "scores_pass2": {
-        "A": 0.4658,
-        "B": 0.8263
+        "A": 0.5,
+        "B": 1.0
+      }
+    },
+    {
+      "question": "Nhân viên tạm ứng 8 triệu, chưa thanh toán sau 30 ngày. Ai phê duyệt và phí phạt là bao nhiêu?",
+      "answer_a": "Trưởng phòng phê duyệt. Phạt 2% tháng trên 8 triệu.",
+      "answer_b": "Phê duyệt: 8 triệu (≥5 triệu) cần Trưởng phòng + Kế toán trưởng. Phí phạt quá hạn 15 ngày: 2%/tháng × 8.000.000 × (15/30) = 80.000 VNĐ. Không được tạm ứng mới cho đến khi hoàn ứng.",
+      "winner_pass1": "B",
+      "winner_pass2": "B",
+      "final_winner": "B",
+      "reasoning_pass1": "Câu trả lời B cung cấp thông tin đầy đủ hơn về quy trình phê duyệt và cách tính phí phạt, bao gồm cả thời gian quá hạn và điều kiện tạm ứng mới. Câu A chỉ nêu phê duyệt và mức phạt mà không giải thích rõ ràng về quy trình hay điều kiện liên quan.",
+      "reasoning_pass2": "Câu trả lời A cung cấp thông tin đầy đủ về quy trình phê duyệt và cách tính phí phạt, bao gồm cả số tiền cụ thể và thời gian quá hạn. Trong khi đó, câu trả lời B chỉ nêu tên người phê duyệt và tỷ lệ phạt mà không cung cấp thông tin chi tiết về cách tính phí phạt và điều kiện tạm ứng mới, dẫn đến thiếu sót về độ chính xác và đầy đủ.",
+      "position_consistent": true,
+      "scores_pass1": {
+        "A": 0.4,
+        "B": 0.8
+      },
+      "scores_pass2": {
+        "A": 0.5,
+        "B": 1.0
+      }
+    },
+    {
+      "question": "Nhân viên Manager có thâm niên 12 năm: tổng phụ cấp hàng tháng và số ngày phép năm?",
+      "answer_a": "Phép: 19 ngày. Phụ cấp: 1.500.000 VNĐ/tháng.",
+      "answer_b": "Phụ cấp tháng: ăn trưa 1.000.000 + điện thoại Manager 500.000 = 1.500.000 VNĐ. Phép năm v2024: 15 ngày cơ bản + 4 ngày thâm niên (12÷3=4) = 19 ngày phép.",
+      "winner_pass1": "B",
+      "winner_pass2": "B",
+      "final_winner": "B",
+      "reasoning_pass1": "Answer B provides a detailed breakdown of the monthly allowance and explains how the annual leave is calculated based on seniority, making it more informative and complete than Answer A, which only states the totals without explanation.",
+      "reasoning_pass2": "Answer A provides a detailed breakdown of the monthly allowances and the calculation for the annual leave days, making it more informative and complete. Answer B, while correct, lacks the detailed explanation and context that Answer A offers.",
+      "position_consistent": true,
+      "scores_pass1": {
+        "A": 0.5,
+        "B": 1.0
+      },
+      "scores_pass2": {
+        "A": 0.5,
+        "B": 1.0
+      }
+    },
+    {
+      "question": "Nhân viên được nghỉ bao nhiêu ngày phép năm?",
+      "answer_a": "Nhân viên được nghỉ 12 ngày phép năm.",
+      "answer_b": "Theo chính sách v2024 HIỆN HÀNH: 15 ngày cơ bản (+1 ngày/3 năm thâm niên). Chính sách v2023 (đã bị thay thế) là 12 ngày. RAG có thể retrieve cả 2 tài liệu — câu trả lời đúng phải ưu tiên v2024.",
+      "winner_pass1": "B",
+      "winner_pass2": "B",
+      "final_winner": "B",
+      "reasoning_pass1": "Answer B provides a more comprehensive response by including the current policy for 2024, the additional leave based on tenure, and a reference to the previous policy. This makes it more accurate and informative compared to Answer A, which only states a single figure without context.",
+      "reasoning_pass2": "Answer A provides the current policy for 2024, including the basic leave days and the additional days based on seniority, which is more accurate and complete than Answer B, which only states the outdated figure of 12 days without context.",
+      "position_consistent": true,
+      "scores_pass1": {
+        "A": 1.0,
+        "B": 1.0
+      },
+      "scores_pass2": {
+        "A": 0.0,
+        "B": 1.0
+      }
+    },
+    {
+      "question": "Nhân viên thử việc có được nghỉ phép năm không?",
+      "answer_a": "Nhân viên thử việc không được nghỉ phép năm và phải xin nghỉ không lương nếu cần.",
+      "answer_b": "KHÔNG. Nhân viên thử việc không được nghỉ phép năm. Nếu cần nghỉ phải xin nghỉ không lương và được trưởng phòng phê duyệt. Đây là negation trap — câu trả lời đúng là phủ định.",
+      "winner_pass1": "B",
+      "winner_pass2": "A",
+      "final_winner": "tie",
+      "reasoning_pass1": "Câu trả lời B cung cấp thông tin chính xác và đầy đủ hơn về quy định nghỉ phép của nhân viên thử việc, bao gồm cả yêu cầu xin nghỉ không lương và sự cần thiết phải có sự phê duyệt từ trưởng phòng. Mặc dù câu trả lời A cũng đúng, nhưng nó thiếu thông tin về phê duyệt, làm cho B trở thành lựa chọn tốt hơn. Câu B cũng nhấn mạnh rằng đây là một 'negation trap', điều này giúp làm rõ hơn cho người đọc.",
+      "reasoning_pass2": "Câu trả lời B cung cấp thông tin chính xác và đầy đủ về chính sách nghỉ phép của nhân viên thử việc mà không có sự nhầm lẫn hay phủ định không cần thiết. Câu A tuy đúng nhưng có phần gây hiểu lầm với cụm từ 'negation trap'.",
+      "position_consistent": false,
+      "scores_pass1": {
+        "A": 0.5,
+        "B": 1.0
+      },
+      "scores_pass2": {
+        "A": 1.0,
+        "B": 0.5
+      }
+    },
+    {
+      "question": "Nhân viên Manager có thể dùng VPN cá nhân (NordVPN) khi WFH không?",
+      "answer_a": "Được, miễn là đảm bảo kết nối an toàn.",
+      "answer_b": "KHÔNG. Chính sách VPN v1.3 cấm sử dụng VPN cá nhân (NordVPN, ExpressVPN) trong mạng công ty. Bắt buộc dùng VPN WireGuard của công ty. Đây là policy contradiction trap — câu hỏi nghe hợp lý nhưng vi phạm chính sách.",
+      "winner_pass1": "B",
+      "winner_pass2": "B",
+      "final_winner": "B",
+      "reasoning_pass1": "Câu trả lời B cung cấp thông tin chính xác và đầy đủ về chính sách VPN của công ty, nêu rõ lý do cấm sử dụng VPN cá nhân và chỉ định VPN được phép sử dụng. Trong khi đó, câu trả lời A chỉ đưa ra một câu trả lời chung chung mà không giải thích rõ ràng về chính sách, dẫn đến thiếu thông tin cần thiết.",
+      "reasoning_pass2": "Answer A cung cấp thông tin chính xác và đầy đủ về chính sách VPN của công ty, nêu rõ lý do cấm sử dụng VPN cá nhân. Trong khi đó, Answer B chỉ đưa ra một câu trả lời mơ hồ và không đề cập đến chính sách cụ thể, dẫn đến sự thiếu rõ ràng và có thể gây hiểu lầm.",
+      "position_consistent": true,
+      "scores_pass1": {
+        "A": 1.0,
+        "B": 1.0
+      },
+      "scores_pass2": {
+        "A": 0.2,
+        "B": 1.0
       }
     }
   ]

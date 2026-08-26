@@ -291,25 +291,26 @@ def generate_phase_b_report(path: str = "reports/judge_results.json") -> dict:
     rows = []
     judge_labels = []
     human_labels = []
+    comparisons = []
     for item in human_data:
-        similarity = _truth_similarity(item["model_answer"], truths[item["question_id"]])
-        judge_label = int(similarity >= 0.38)
+        truth = truths[item["question_id"]]
+        # Task 7 phải đo LLM judge, không phải token overlap. Chấm model_answer đấu
+        # với ground_truth qua swap-and-average (đã khử position bias ở Task 6):
+        # thắng hoặc hoà reference → đạt (1), thua reference → không đạt (0).
+        comparison = swap_and_average(item["question"], item["model_answer"], truth)
+        comparisons.append(comparison)
+        judge_label = int(comparison.final_winner in ("A", "tie"))
         judge_labels.append(judge_label)
         human_labels.append(item["human_label"])
         rows.append({
             **item,
             "judge_label": judge_label,
-            "reference_similarity": round(similarity, 4),
+            "judge_winner": comparison.final_winner,
+            "position_consistent": comparison.position_consistent,
+            "reference_similarity": round(_truth_similarity(item["model_answer"], truth), 4),
             "agree": judge_label == item["human_label"],
         })
 
-    # Exercise pairwise + swapping on representative good/bad answers.
-    comparisons = []
-    for item in human_data[:5]:
-        result = swap_and_average(
-            item["question"], item["model_answer"], truths[item["question_id"]]
-        )
-        comparisons.append(result)
     bias = bias_report(comparisons)
     report = {
         "judge_model": JUDGE_MODEL if OPENAI_API_KEY else "offline_deterministic_fallback",
