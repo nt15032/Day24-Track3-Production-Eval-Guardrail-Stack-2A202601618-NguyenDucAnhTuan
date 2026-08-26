@@ -5,6 +5,8 @@ __pycache__/
 *.egg-info/
 .venv/
 venv/
-answers_50q.json
-reports/*.json
-!reports/.gitkeep
+qdrant_local_data/
+ragas_report.json
+naive_baseline_report.json
+lab24_outputs.zip
+.pytest_cache/

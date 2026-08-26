@@ -1,0 +1,215 @@
+{
+  "judge_model": "offline_deterministic_fallback",
+  "cohen_kappa": 0.4,
+  "labels": [
+    {
+      "question_id": 1,
+      "question": "Nhân viên được nghỉ bao nhiêu ngày khi kết hôn?",
+      "model_answer": "Nhân viên được nghỉ 3 ngày làm việc có lương khi kết hôn.",
+      "human_label": 1,
+      "human_note": "Chính xác và đầy đủ.",
+      "judge_label": 1,
+      "reference_similarity": 0.7222,
+      "agree": true
+    },
+    {
+      "question_id": 5,
+      "question": "Muốn mua thiết bị trị giá 55 triệu cần ai phê duyệt?",
+      "model_answer": "Cần Giám đốc phòng ban phê duyệt.",
+      "human_label": 0,
+      "human_note": "Sai — 55 triệu vượt ngưỡng 50 triệu nên phải CEO phê duyệt, không phải Director.",
+      "judge_label": 1,
+      "reference_similarity": 0.3846,
+      "agree": false
+    },
+    {
+      "question_id": 12,
+      "question": "Thưởng Tết tối thiểu cho nhân viên chính thức có từ 6 tháng trở lên là bao nhiêu?",
+      "model_answer": "Nhân viên được thưởng Tết tối thiểu 1 tháng lương.",
+      "human_label": 1,
+      "human_note": "Đúng và súc tích.",
+      "judge_label": 0,
+      "reference_similarity": 0.3448,
+      "agree": false
+    },
+    {
+      "question_id": 21,
+      "question": "Một nhân viên Senior có 9 năm thâm niên được nghỉ bao nhiêu ngày phép năm và lương trong khoảng nào?",
+      "model_answer": "Được nghỉ 18 ngày phép (15 cơ bản + 3 thâm niên). Lương Senior từ 20 đến 35 triệu.",
+      "human_label": 1,
+      "human_note": "Tính đúng, bao gồm cả phép và lương.",
+      "judge_label": 1,
+      "reference_similarity": 0.6087,
+      "agree": true
+    },
+    {
+      "question_id": 23,
+      "question": "Nhân viên được tài trợ khóa học 25 triệu, nghỉ việc sau 8 tháng. Phải hoàn trả bao nhiêu?",
+      "model_answer": "Hoàn trả 25 triệu vì chưa đủ 1 năm cam kết.",
+      "human_label": 1,
+      "human_note": "Đúng — 100% hoàn trả vì nghỉ trước 12 tháng.",
+      "judge_label": 0,
+      "reference_similarity": 0.2258,
+      "agree": false
+    },
+    {
+      "question_id": 29,
+      "question": "Nhân viên tạm ứng 8 triệu, chưa thanh toán sau 30 ngày. Ai phê duyệt và phí phạt là bao nhiêu?",
+      "model_answer": "Trưởng phòng phê duyệt. Phạt 2% tháng trên 8 triệu.",
+      "human_label": 0,
+      "human_note": "Thiếu — 8 triệu cần cả Kế toán trưởng. Phạt phải tính pro-rata cho 15 ngày quá hạn = 80.000 VNĐ.",
+      "judge_label": 0,
+      "reference_similarity": 0.2812,
+      "agree": true
+    },
+    {
+      "question_id": 33,
+      "question": "Nhân viên Manager có thâm niên 12 năm: tổng phụ cấp hàng tháng và số ngày phép năm?",
+      "model_answer": "Phép: 19 ngày. Phụ cấp: 1.500.000 VNĐ/tháng.",
+      "human_label": 1,
+      "human_note": "Tính đúng cả hai.",
+      "judge_label": 1,
+      "reference_similarity": 0.4167,
+      "agree": true
+    },
+    {
+      "question_id": 41,
+      "question": "Nhân viên được nghỉ bao nhiêu ngày phép năm?",
+      "model_answer": "Nhân viên được nghỉ 12 ngày phép năm.",
+      "human_label": 0,
+      "human_note": "Sai — trả lời theo v2023 đã hết hiệu lực. v2024 hiện hành là 15 ngày.",
+      "judge_label": 0,
+      "reference_similarity": 0.0811,
+      "agree": true
+    },
+    {
+      "question_id": 46,
+      "question": "Nhân viên thử việc có được nghỉ phép năm không?",
+      "model_answer": "Nhân viên thử việc không được nghỉ phép năm và phải xin nghỉ không lương nếu cần.",
+      "human_label": 1,
+      "human_note": "Đúng hoàn toàn, bao gồm hành động thay thế.",
+      "judge_label": 1,
+      "reference_similarity": 0.5172,
+      "agree": true
+    },
+    {
+      "question_id": 50,
+      "question": "Nhân viên Manager có thể dùng VPN cá nhân (NordVPN) khi WFH không?",
+      "model_answer": "Được, miễn là đảm bảo kết nối an toàn.",
+      "human_label": 0,
+      "human_note": "Sai — VPN cá nhân bị cấm theo chính sách VPN v1.3. Phải dùng VPN WireGuard của công ty.",
+      "judge_label": 0,
+      "reference_similarity": 0.0286,
+      "agree": true
+    }
+  ],
+  "bias": {
+    "total_judged": 5,
+    "position_bias_rate": 0.0,
+    "position_bias_count": 0,
+    "verbosity_bias": 0.8,
+    "verbosity_details": {
+      "a_wins_a_longer": 0,
+      "b_wins_b_longer": 4,
+      "total_decisive": 5
+    },
+    "interpretation": "Position bias thấp; kết quả judge tương đối ổn định qua phép đổi vị trí. Verbosity bias đáng lưu ý."
+  },
+  "pairwise_results": [
+    {
+      "question": "Nhân viên được nghỉ bao nhiêu ngày khi kết hôn?",
+      "answer_a": "Nhân viên được nghỉ 3 ngày làm việc có lương khi kết hôn.",
+      "answer_b": "Nhân viên được nghỉ 3 ngày làm việc có lương khi kết hôn, không trừ vào phép năm.",
+      "winner_pass1": "B",
+      "winner_pass2": "B",
+      "final_winner": "B",
+      "reasoning_pass1": "Fallback local: so sánh mức độ bao phủ câu hỏi, tính cụ thể và độ súc tích; A=0.690, B=0.790.",
+      "reasoning_pass2": "Fallback local: so sánh mức độ bao phủ câu hỏi, tính cụ thể và độ súc tích; A=0.790, B=0.690.",
+      "position_consistent": true,
+      "scores_pass1": {
+        "A": 0.69,
+        "B": 0.79
+      },
+      "scores_pass2": {
+        "A": 0.69,
+        "B": 0.79
+      }
+    },
+    {
+      "question": "Muốn mua thiết bị trị giá 55 triệu cần ai phê duyệt?",
+      "answer_a": "Cần Giám đốc phòng ban phê duyệt.",
+      "answer_b": "Đơn hàng trên 50.000.000 VNĐ cần Tổng Giám đốc (CEO) phê duyệt.",
+      "winner_pass1": "B",
+      "winner_pass2": "B",
+      "final_winner": "B",
+      "reasoning_pass1": "Fallback local: so sánh mức độ bao phủ câu hỏi, tính cụ thể và độ súc tích; A=0.287, B=0.588.",
+      "reasoning_pass2": "Fallback local: so sánh mức độ bao phủ câu hỏi, tính cụ thể và độ súc tích; A=0.588, B=0.287.",
+      "position_consistent": true,
+      "scores_pass1": {
+        "A": 0.2875,
+        "B": 0.5875
+      },
+      "scores_pass2": {
+        "A": 0.2875,
+        "B": 0.5875
+      }
+    },
+    {
+      "question": "Thưởng Tết tối thiểu cho nhân viên chính thức có từ 6 tháng trở lên là bao nhiêu?",
+      "answer_a": "Nhân viên được thưởng Tết tối thiểu 1 tháng lương.",
+      "answer_b": "Nhân viên chính thức có thời gian làm việc từ 6 tháng trở lên được thưởng Tết tối thiểu 1 tháng lương. Nhân viên dưới 6 tháng được hưởng pro-rata theo số tháng làm việc thực tế.",
+      "winner_pass1": "B",
+      "winner_pass2": "B",
+      "final_winner": "B",
+      "reasoning_pass1": "Fallback local: so sánh mức độ bao phủ câu hỏi, tính cụ thể và độ súc tích; A=0.464, B=0.878.",
+      "reasoning_pass2": "Fallback local: so sánh mức độ bao phủ câu hỏi, tính cụ thể và độ súc tích; A=0.878, B=0.464.",
+      "position_consistent": true,
+      "scores_pass1": {
+        "A": 0.4639,
+        "B": 0.8778
+      },
+      "scores_pass2": {
+        "A": 0.4639,
+        "B": 0.8778
+      }
+    },
+    {
+      "question": "Một nhân viên Senior có 9 năm thâm niên được nghỉ bao nhiêu ngày phép năm và lương trong khoảng nào?",
+      "answer_a": "Được nghỉ 18 ngày phép (15 cơ bản + 3 thâm niên). Lương Senior từ 20 đến 35 triệu.",
+      "answer_b": "Theo chính sách v2024: 15 ngày cơ bản + 3 ngày thâm niên (9÷3=3) = 18 ngày phép. Lương Senior (P3-P4): 20-35 triệu VNĐ/tháng.",
+      "winner_pass1": "A",
+      "winner_pass2": "A",
+      "final_winner": "A",
+      "reasoning_pass1": "Fallback local: so sánh mức độ bao phủ câu hỏi, tính cụ thể và độ súc tích; A=0.670, B=0.615.",
+      "reasoning_pass2": "Fallback local: so sánh mức độ bao phủ câu hỏi, tính cụ thể và độ súc tích; A=0.615, B=0.670.",
+      "position_consistent": true,
+      "scores_pass1": {
+        "A": 0.67,
+        "B": 0.615
+      },
+      "scores_pass2": {
+        "A": 0.67,
+        "B": 0.615
+      }
+    },
+    {
+      "question": "Nhân viên được tài trợ khóa học 25 triệu, nghỉ việc sau 8 tháng. Phải hoàn trả bao nhiêu?",
+      "answer_a": "Hoàn trả 25 triệu vì chưa đủ 1 năm cam kết.",
+      "answer_b": "Nhân viên phải cam kết làm việc ít nhất 1 năm sau khi hoàn thành khóa học. Nghỉ sau 8 tháng là trước hạn cam kết, phải hoàn trả 100% chi phí tức 25.000.000 VNĐ.",
+      "winner_pass1": "B",
+      "winner_pass2": "B",
+      "final_winner": "B",
+      "reasoning_pass1": "Fallback local: so sánh mức độ bao phủ câu hỏi, tính cụ thể và độ súc tích; A=0.466, B=0.826.",
+      "reasoning_pass2": "Fallback local: so sánh mức độ bao phủ câu hỏi, tính cụ thể và độ súc tích; A=0.826, B=0.466.",
+      "position_consistent": true,
+      "scores_pass1": {
+        "A": 0.4658,
+        "B": 0.8263
+      },
+      "scores_pass2": {
+        "A": 0.4658,
+        "B": 0.8263
+      }
+    }
+  ]
+}

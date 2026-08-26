@@ -1,99 +1,91 @@
 # CI/CD Blueprint: RAG Eval + Guardrail Stack
 
-**Sinh viên:** [Họ Tên]  
-**Ngày:** [Ngày làm lab]
+**Sinh viên:** Nguyễn Đức Anh Tuấn
 
----
+**Ngày:** 26/08/2026
 
 ## Guard Stack Architecture
 
-```
+```text
 User Input
     │
-    ▼ (~?ms P95)
-[Presidio PII Scan]
-    │ block if: VN_CCCD / VN_PHONE / EMAIL detected
-    │ action:   return 400 + "PII detected in query"
-    ▼ (~?ms P95)
-[NeMo Input Rail]
-    │ block if: off-topic / jailbreak / prompt injection
-    │ action:   return 503 + refuse message
     ▼
-[RAG Pipeline (Day 18)]
-    │ M1 Chunk → M2 Search → M3 Rerank → GPT-4o-mini
+[Presidio-compatible PII Scan] -- CCCD / CMND / phone / email
+    │ block: HTTP 400 + redacted audit event
     ▼
-[NeMo Output Rail]
-    │ flag if:  PII in response / sensitive content
-    │ action:   replace with safe response
+[Local Rules + NeMo Input Rail]
+    │ block: jailbreak / prompt injection / PII request / off-topic
+    ▼
+[Day 18 RAG Pipeline]
+    │ hierarchical chunks → BM25+dense RRF → cross-encoder → answer
+    ▼
+[PII/Sensitive Output Check + NeMo Output Rail]
+    │ block/redact unsafe output
     ▼
 User Response
 ```
 
----
-
 ## Latency Budget
 
-*(Điền từ kết quả Task 12 — measure_p95_latency())*
-
 | Layer | P50 (ms) | P95 (ms) | P99 (ms) | Budget |
-|---|---|---|---|---|
-| Presidio PII | ? | ? | ? | <10ms |
-| NeMo Input Rail | ? | ? | ? | <300ms |
-| RAG Pipeline | ? | ? | ? | <2000ms |
-| NeMo Output Rail | ? | ? | ? | <300ms |
-| **Total Guard** | ? | **?** | ? | **<500ms** |
+|---|---:|---:|---:|---:|
+| PII detection fallback | 0.014 | 0.028 | 0.058 | <10 ms |
+| Local input policy | 0.008 | 0.023 | 0.025 | <300 ms |
+| RAG Pipeline | N/A | N/A | N/A | <2000 ms |
+| Hosted NeMo output rail | N/A | N/A | N/A | <300 ms |
+| **Total measured local guard** | **0.021** | **0.038** | **0.083** | **<500 ms** |
 
-**Budget OK?** [ ] Yes / [ ] No  
-**Comment:** [Nếu vượt budget, layer nào là bottleneck và cách tối ưu?]
+**Measured local budget:** Pass.
 
----
+**Production status:** Chưa xác nhận. Cần benchmark lại với Presidio spaCy, NeMo và API model thật; số đo local không đại diện cho network latency.
 
-## CI/CD Gates (phải pass trước khi merge to main)
+## CI/CD Gates
 
 ```yaml
-# .github/workflows/rag_eval.yml
-- name: RAGAS Quality Gate
+- name: Unit and guard tests
+  run: pytest tests/ -v
+
+- name: RAGAS quality gate
   run: python src/phase_a_ragas.py
-  env:
-    MIN_FAITHFULNESS: 0.75
-    MIN_AVG_SCORE: 0.65
+  policy:
+    min_faithfulness: 0.75
+    min_average_score: 0.65
+    require_hosted_ragas_for_release: true
 
-- name: Guardrail Gate
-  run: pytest tests/test_phase_c.py -k "test_adversarial_suite_pass_rate"
-  # phải ≥ 15/20 (75%)
+- name: Adversarial guard gate
+  run: python src/phase_c_guard.py
+  policy:
+    minimum_pass_rate: 0.90
 
-- name: Latency Gate
-  run: python -c "from src.phase_c_guard import measure_p95_latency; ..."
-  # P95 total < 500ms
+- name: Guard latency gate
+  policy:
+    maximum_total_p95_ms: 500
 ```
 
----
+Release build phải dùng hosted RAGAS/NeMo, không chấp nhận `offline_proxy` làm bằng chứng production. Pull request có thể dùng fallback để kiểm tra logic nhanh; nightly/release workflow chạy dependency và API integration đầy đủ.
 
-## Monitoring Dashboard (production)
+## Monitoring Dashboard
 
 | Metric | Alert Threshold | Action |
-|---|---|---|
-| RAGAS faithfulness (daily sample) | < 0.70 | Page on-call |
-| Adversarial block rate | < 80% | Review new attack patterns |
-| Guard P95 latency | > 600ms | Scale NeMo model |
-| PII detected count | spike >10/hour | Security alert |
-
----
+|---|---:|---|
+| RAGAS faithfulness, daily sample | <0.70 | Page on-call và giữ bản deploy trước |
+| Adversarial suite pass rate | <90% | Block release, cập nhật attack patterns |
+| Guard P95 latency | >500 ms | Kiểm tra model/API, timeout và circuit breaker |
+| PII detections | >10/hour hoặc tăng 3× baseline | Security alert, kiểm tra nguồn traffic |
+| NeMo unavailable rate | >1% trong 5 phút | Fail closed cho dữ liệu nhạy cảm, bật fallback |
+| Version-conflict failures | >5% | Kiểm tra metadata hiệu lực và retrieval filter |
 
 ## Kết quả thực tế từ Lab
 
-| | Kết quả |
-|---|---|
-| RAGAS avg_score (50q) | ? |
-| Worst metric | ? |
-| Dominant failure distribution | ? |
-| Cohen's κ | ? |
-| Adversarial pass rate | ? / 20 |
-| Guard P95 latency | ? ms |
-
----
+| Metric | Kết quả |
+|---|---:|
+| RAGAS/proxy avg_score (50q) | 0.8344 |
+| Worst aggregate metric | answer_relevancy (0.7133) |
+| Dominant failure distribution | adversarial (avg 0.7821) |
+| Cohen's κ | 0.4000 |
+| Adversarial pass rate | 20/20 (100%) |
+| Local guard P95 latency | 0.038 ms |
 
 ## Nhận xét & Cải tiến
 
-> [Viết 3-5 câu về: điều gì hoạt động tốt, điều gì cần cải thiện,
->  nếu deploy production thực sự bạn sẽ thay đổi gì trong stack này?]
+Guard local xử lý đúng toàn bộ 20 mẫu tấn công và có latency rất thấp. Retrieval factual tốt hơn multi-hop/adversarial; điểm yếu chính là tổng hợp câu trả lời và recall khi phải kết hợp hoặc phân giải nhiều policy. Trước production cần cài Qdrant, Presidio, NeMo, model embedding/reranker và chạy lại bằng API thật. Cũng cần thêm metadata `status`, `effective_date`, `supersedes` để ưu tiên policy hiện hành, cùng circuit breaker và fail-closed behavior khi guard service lỗi.
